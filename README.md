@@ -5,48 +5,49 @@ PowerShell Script to import Group Policy changes from a production, test or deve
 
 
 
+
+  
+    
 Active Directory Design
 =============================
+Your OU design should use a structure similar to this:  
+  
+domain.local  
+|-- DEV  
+|-------- Users  
+|-------- Workstations   
+|----------- Laptops  
+|----------- Desktops  
+|-- PRD  
+|-------- Users  
+|-------- Workstations  
+|----------- Laptops  
+|----------- Desktops  
+|-- TST  
+|-------- Users  
+|-------- Workstations  
+|----------- Laptops  
+|----------- Desktops  
 
-Your OU design should have a structure similar to this example:
-
-* Domain.local
-- DEV
----- Users
----- Workstations
-         DEV Workstations (Linked Group Policy Object)
-- PRD
----- Users
----- Workstations
-         PRD Workstations (Linked Group Policy Object)
-- TST
----- Users
----- Workstations
-         TST Workstations (Linked Group Policy Object)
-
+  
+    
+      
 
 
 Group Policy Object Naming Convention
 =============================
 
-Your Group Policies MUST start with the name of the environment.
-
-For example:
-The Development Workstations policy is named "PRD Workstations".
-The Production Workstations policy is named "DEV Workstations".
-The Test Workstations policy is named "TST Workstations".
-
-
+Each Group Policies Object MUST start with the three digit prefix for the name of the environment.   
+"PRD"  
+"TST"  
+"DEV"     
+  
+For example:  
+The Production Workstations GPO is named "PRD Workstations".  
+The Test Workstations GPO is named "TST Workstations".  
+  
+  
+  
 Basic Usage Examples
 =============================
-
-EXAMPLE
-   .\Import-GPtoEnvironment.ps1 -Source DEV -Destination PRD
-   Imports Group Policy objects from DEV into PRD.
-EXAMPLE
-   .\Import-GPtoEnvironment.ps1 PRD DEV -Whatif
-   Shows what would happen if you imported Group Policy objects from PRD into DEV.
-EXAMPLE
-   .\Import-GPtoEnvironment.ps1 DEV PRD -Confirm:$false
-   Imports ALL Group Policy objects from DEV into PRD without prompting to confirm for each import operation.
-
+See the examples in the PowerShell help. Type: "Get-Help .\Import-GPtoEnvironment.ps1 -examples".
